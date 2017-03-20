@@ -1,2 +1,2 @@
 library(testthat)
-test_check("qtl2scan")
+test_check("qtl2mongo")
