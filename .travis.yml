@@ -5,12 +5,6 @@ cache: packages
 r_packages:
  - devtools
 
-r_github_packages:
- - kbroman/qtl@devel
- - rqtl/qtl2geno
- - rqtl/qtl2scan
- - rqtl/qtl2plot
-
 warnings_are_errors: true
 
 notifications:
