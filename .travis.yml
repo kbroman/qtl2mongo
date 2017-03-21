@@ -5,6 +5,9 @@ cache: packages
 r_packages:
  - devtools
 
+r_github_packages:
+ - rqtl/qtl2geno
+
 warnings_are_errors: true
 
 notifications:
