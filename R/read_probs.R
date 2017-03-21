@@ -34,6 +34,7 @@ read_probs <-
 
     # read chromosome table
     m_chr <- mongolite::mongo("chr", db, url)
+    if(m_chr$count() == 0) stop("Empty database?")
     chr_tab <- m_chr$find()
 
     if(!is.null(chr)) {
