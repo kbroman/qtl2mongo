@@ -60,7 +60,7 @@ write_probs <-
     m_meta$insert( list(ind=ind,
                    alleles=attr(probs, "alleles"),
                    crosstype=attr(probs, "crosstype"),
-                   alleleprobs=attr(probs, "alleleprobs")) )
+                   alleleprobs=attr(probs, "alleleprobs")), auto_unbox=TRUE)
 
     # is_x_chr attribute
     is_x_chr <- attr(probs, "is_x_chr")
@@ -76,7 +76,7 @@ write_probs <-
         m_chr$insert(list(chr=names(probs)[chr],
                           is_x_chr=is_x_chr[chr],
                           geno=colnames(probs[[chr]]),
-                          chr_index=chr)))
+                          chr_index=chr), auto_unbox=TRUE) )
 
     # insert chr information
     m_probs <- mongolite::mongo("probs", db, url)
@@ -95,12 +95,13 @@ write_probs <-
                                  marker_index=i,
                                  chr=chr_nam,
                                  pos=pos[[i]],
-                                 probs=probs[[chr]][,,i]) ))
+                                 probs=probs[[chr]][,,i]), auto_unbox=TRUE))
     }
 
     # add indexes
     m_probs$index('{"marker":1}')
     m_probs$index('{"chr":1}')
+    m_probs$index('{"chr":1, "pos":1}')
     m_probs$index('{"marker_index":1}')
 
     invisible(NULL)
