@@ -1,6 +1,6 @@
 ### R/qtl2mongo
 
-[![Build Status](https://travis-ci.org/rqtl/qtl2mongo.svg?branch=master)](https://travis-ci.org/rqtl/qtl2mongo)
+[![Build Status](https://travis-ci.org/kbroman/qtl2mongo.svg?branch=master)](https://travis-ci.org/kbroman/qtl2mongo)
 
 [Karl Broman](http://kbroman.org)
 
