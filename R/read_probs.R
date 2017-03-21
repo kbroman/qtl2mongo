@@ -84,7 +84,6 @@ read_probs <-
         pr <- m_probs$find(query=paste0('{"chr":"',chr,'"}'),
                            sort='{"marker_index":1}')
 
-        return(pr)
         if(is.null(pr) || length(pr$marker) == 0) {
             warning("No markers found on that chromosome")
             return(NULL)
