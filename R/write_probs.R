@@ -98,6 +98,11 @@ write_probs <-
                                  probs=probs[[chr]][,,i]) ))
     }
 
+    # add indexes
+    m_probs$index('{"marker":1}')
+    m_probs$index('{"chr":1}')
+    m_probs$index('{"marker_index":1}')
+
     invisible(NULL)
 }
 
