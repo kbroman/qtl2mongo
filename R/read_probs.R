@@ -61,7 +61,7 @@ read_probs <-
     m_probs <- mongolite::mongo("probs", db, url)
 
     if(!is.null(pos)) {
-        if(!("pos" %in% names( m_probs$find(fields='{"pos":1}', limit=1) )))
+        if(length(m_probs$find(fields='{"pos":1}', limit=1)$pos) == 0)
             stop("Database doesn't contain position information")
 
         if(!is.null(markers))
