@@ -61,7 +61,7 @@ read_probs <-
     m_probs <- mongolite::mongo("probs", db, url)
 
     if(!is.null(pos)) {
-        if("pos" %in% names(m_probs$find(limit=1)))
+        if(!("pos" %in% names( m_probs$find(fields='{"pos":1}', limit=1) )))
             stop("Database doesn't contain position information")
 
         if(!is.null(markers))
@@ -70,24 +70,30 @@ read_probs <-
         if(length(pos) != 2 || pos[1] > pos[2])
             stop('Argument "pos" should have length 2 with pos[1] <= pos[2]')
 
-        pr <- m_probs$find(query=paste0('{"chr":"',chr,'","pos":{"$lte":', pos[1],'},',
-                                        '"pos":{"$gte":', pos[2], '}}'),
+        pr <- m_probs$find(query=paste0('{"chr":"',chr,'","pos":{"$gte":', pos[1],'},',
+                                        '"pos":{"$lte":', pos[2], '}}'),
                            sort='{"marker_index":1}')
 
-        if(length(markers) == 0)
-            stop("No markers found in that interval")
+        if(is.null(pr) || length(pr$marker) == 0) {
+            warning("No markers found in that interval")
+            return(NULL)
+        }
     }
     else if(is.null(markers)) {
-        pr <- m_probs$find(paste0('{"chr":"',chr,'"}'),
+        pr <- m_probs$find(query=paste0('{"chr":"',chr,'"}'),
                            sort='{"marker_index":1}')
-        if(length(markers) == 0)
-            stop("No markers found on that chromosome")
+
+        return(pr)
+        if(is.null(pr) || length(pr$marker) == 0) {
+            warning("No markers found on that chromosome")
+            return(NULL)
+        }
     }
     else {
         pr <- m_probs$find(paste0('{"marker":{"$in":[',
                                   paste0('"', markers, '"', collapse=','),
                                   ']}}'),
-                          sort='{"marker_index":1}')
+                           sort='{"marker_index":1}')
 
         chr <- unlist(pr$chr)
         if(length(unique(chr)) > 1)
