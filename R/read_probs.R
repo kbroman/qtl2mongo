@@ -96,6 +96,11 @@ read_probs <-
                                   ']}}'),
                            sort='{"marker_index":1}')
 
+        if(is.null(pr) || length(pr$marker) == 0) {
+            warning("No markers found")
+            return(NULL)
+        }
+
         chr <- unlist(pr$chr)
         if(length(unique(chr)) > 1)
             stop("markers on multiple chromosomes")
